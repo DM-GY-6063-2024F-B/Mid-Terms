@@ -3,16 +3,16 @@ let maskImg, mouseImg, pigImg, ring1Img, ring2Img, ring3Img, ring4Img, tigerImg,
 
 const baseWidth = 1920;
 const baseHeight = 1080;
-let scaleX, scaleY;
+let scaleX, scaleY, scaleXY;
 
 let elementPositions = {
   temple: { x: 1582, y: 464, size: 300 },
-  bear: { x: 760, y: 383, size: 250 },
-  bunny: { x: 1860, y: 530, size: 150 },
-  cat: { x: 1400, y: 400, size: 180 },
-  tiger: { x: 1280, y: 400, size: 120 },
-  mask: { x: 1450, y: 700, size: 1050 },
-  mouse: { x: 1618, y: 420, size: 200 },
+  bear: { x: 760, y: 383, size: 280 },
+  bunny: { x: 1900, y: 520, size: 230 },
+  cat: { x: 1440, y: 390, size: 200 },
+  tiger: { x: 1290, y: 400, size: 120 },
+  mask: { x: 1450, y: 700, size: 1040 },
+  mouse: { x: 1630, y: 400, size: 200 },
   pig: { x: 1700, y: 458, size: 150 },
   ring1: { x: 1080, y: 650, size: 1.9 },
   ring2: { x: 1080, y: 630, size: 1.5 },
@@ -90,6 +90,7 @@ function draw() {
 function calculateScalingFactors() {
   scaleX = windowWidth / baseWidth;
   scaleY = windowHeight / baseHeight;
+  scaleXY = max(scaleX, scaleY);
 }
 
 function drawBackground() {
@@ -101,7 +102,7 @@ function placeElements() {
     x: elementPositions.temple.x * scaleX,
     y: elementPositions.temple.y * scaleY
   };
-  image(templeImg, templePos.x, templePos.y, elementPositions.temple.size * scaleX, elementPositions.temple.size * scaleY);
+  image(templeImg, templePos.x, templePos.y, elementPositions.temple.size * scaleXY, elementPositions.temple.size * scaleXY);
 
   let bearPos = {
     x: (elementPositions.bear.x + bearFlyX) * scaleX,
@@ -133,7 +134,7 @@ function placeElements() {
     push();
     translate(bearPos.x, bearPos.y);
     scale(bearScale);
-    image(bearImg, 0, 0, elementPositions.bear.size * scaleX, elementPositions.bear.size * scaleY);
+    image(bearImg, 0, 0, elementPositions.bear.size * scaleXY, elementPositions.bear.size * scaleXY);
     pop();
   } else {
     textSize(20 * scaleX);
@@ -149,7 +150,7 @@ function placeElements() {
         x: elementPositions[el].x * scaleX,
         y: elementPositions[el].y * scaleY
       };
-      image(eval(el + 'Img'), pos.x, pos.y, elementPositions[el].size * scaleX, elementPositions[el].size * scaleY);
+      image(eval(el + 'Img'), pos.x, pos.y, elementPositions[el].size * scaleXY, elementPositions[el].size * scaleXY);
     });
 
     let maskPos = {
@@ -159,7 +160,7 @@ function placeElements() {
     push();
     translate(maskPos.x, maskPos.y);
     rotate(radians(-30));
-    image(maskImg, 0, 0, elementPositions.mask.size * scaleX, elementPositions.mask.size * scaleY);
+    image(maskImg, 0, 0, elementPositions.mask.size * scaleXY, elementPositions.mask.size * scaleXY);
     pop();
 
     for (let i = 1; i <= 4; i++) {
